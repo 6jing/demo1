@@ -19,9 +19,10 @@
       <a-card :title="item.title">
         <!-- 将得到的数据传送给from模块，将from模块中的数据回调给result -->
           <From 
-          :id="item.id"
-          :DataSource="item.result"
-          @analysisChange="getnewanalysis">
+          :id =item.id
+          :DataSource = item.result
+          :count = item.count
+          >
           </From>
       </a-card>
     </a-list-item>
@@ -35,34 +36,11 @@
 <script>
 import From from '@/components/From-style.vue';
 
-const data = [
-  {
-    id:0,
-    title: '功能域-行为(Function-Action)  需求要素',
-    result:''
-  },
-  {
-    id:1,
-    title: '功能域-对象(Function-Object)  需求要素',
-    result:''
-  },
-  {
-    id:2,
-    title: '结构域 (Structrue) 需求要素',
-    result:''
-  },
-  {
-    id:3,
-    title: '场景域 (scene) 需求要素',
-    result:''
-  },
 
-];
 export default {
 
   data() {
     return {
-      data,
       AnalysisContent:'',
       result:{
         S: ['机械手', '机'],
@@ -80,16 +58,22 @@ export default {
 
     //需求分析的接口
     async analysis(){
-      let i = 0
       const {data: res} = await this.$http.post('/api/post', this.AnalysisContent)
       console.log(res)
 
-      console.log(data[1].result)
-
-
+      let i = 0
       //需要将this.result，改为this.res，将接收到的信息放入到表格中（改）
-      for(var key in this.result){
-        this.$store.state.data[i].result=this.result[key]
+      for(let n in this.result){
+        let emptyresult =[]
+        let emptyresult1 = this.result[n]
+        this.$store.state.data[i].count=emptyresult1.length
+        for (let mm = 0,len=emptyresult1.length;mm<len;mm++){
+          let resultitem = {}
+          resultitem.key = mm
+          resultitem.name = emptyresult1[mm]
+          emptyresult.push(resultitem)         
+        }
+        this.$store.state.data[i].result=emptyresult
         i++
       }
 

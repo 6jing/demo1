@@ -1,11 +1,12 @@
 <template>
-  <div>{{this.$store.state.data}}
+  <div>
   <a-list :grid="{ gutter: 16, column: 4 }" :data-source="$store.state.data">
     <a-list-item slot="renderItem" slot-scope="item">
       <a-card :title="item.title">
         <From 
           :id="item.id" 
-          :DataSource="item.result">
+          :DataSource = item.result
+          :count = item.count>
           </From>
       </a-card>
     </a-list-item>
