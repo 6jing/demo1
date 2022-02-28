@@ -16,6 +16,9 @@ import 'ant-design-vue/dist/antd.css';
 //导入路由模块
 import router from '@/router'
 
+//导入vuex模块
+import store from '@/vuex'
+
 //导入axios模块
 import axios from 'axios'
 
@@ -48,5 +51,6 @@ Vue.config.productionTip = false;
 //实例化路由模块
 new Vue({
     render: h => h(App),
-    router
+    router,
+    store
 }).$mount('#app');

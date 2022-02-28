@@ -1,9 +1,12 @@
 <template>
-  <div>
-  <a-list :grid="{ gutter: 16, column: 4 }" :data-source="data">
+  <div>{{this.$store.state.data}}
+  <a-list :grid="{ gutter: 16, column: 4 }" :data-source="$store.state.data">
     <a-list-item slot="renderItem" slot-scope="item">
       <a-card :title="item.title">
-        <From :DataSource="item.result"></From>
+        <From 
+          :id="item.id" 
+          :DataSource="item.result">
+          </From>
       </a-card>
     </a-list-item>
   </a-list>
@@ -30,18 +33,22 @@ import bus from './eventBus.js'
 
 const data = [
   {
+    id:0,
     title: '功能域-行为(Function-Action)  需求要素',
     result:''
   },
   {
+    id:1,
     title: '功能域-对象(Function-Object)  需求要素',
     result:''
   },
   {
+    id:2,
     title: '结构域 (Structrue) 需求要素',
     result:''
   },
   {
+    id:3,
     title: '场景域 (scene) 需求要素',
     result:''
   }
@@ -50,14 +57,14 @@ export default {
   data() {
     return {
       data,
+      data1:''
     };
   },
 
   created() {
     bus.$on('shareAnalysisResult', val => {
+      this.data1=val
       console.log(val)
-      this.data=''
-      this.data=val
     })
   },
 

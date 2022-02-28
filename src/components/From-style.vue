@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 添加按钮 -->
-    <a-table class="table-style" bordered :data-source="dataSource" :columns="columns">
+    <a-table class="table-style" bordered :data-source="DataSourceChange" :columns="columns">
       <template slot="name" slot-scope="text, record">
         <editable-cell :text="text" @change="onCellChange(record.key, 'name', $event)" />
       </template>
@@ -80,38 +80,41 @@ const EditableCell = {
 
 export default {
 
-  // 监听数据的变化
-  watch:{
-    async DataSource(newVal){
-      if(newVal==='') return
-      for(var j = 0,len=newVal.length; j < len; j++) {
-        let data ={}
-        data.name=newVal[j]
-        data.key=j
-        this.dataSource.push(data)
-        console.log(this.dataSource)
-      }
-      this.count  = j + this.count
-    },
 
-  },
-
+//
   props: [
     'DataSource',
     'id'
   ],
 
-  
+//计算属性
+  computed:{
+    // 将父组件传递的数据改变格式
+    DataSourceChange: function(){
+      let empty = []
+      for(var m = 0,len=this.DataSource.length; m < len; m++) {
+        
+        let data = {}
+        data.name = this.DataSource[m]
+        data.key = m
+        empty.push(data)
+      }
+      return empty
+    }
+  },
+
+//模块
   components: {
     EditableCell,
   },
 
+ 
+//返回的数据
   data() {
     return {
-      // 需要传送的数据
-      dataSource: [],
       
       count : 0,
+
       columns: [
         {
           title: '需求要素内容',
@@ -128,7 +131,11 @@ export default {
       ],
     };
   },
+
+//方法函数，修改的是vuex中的全局的变量
   methods: {
+
+    //修改函数，修改全局中的数据变量
     onCellChange(key, dataIndex, value) {
       const dataSource = [...this.dataSource];
       const target = dataSource.find(item => item.key === key);
@@ -136,33 +143,48 @@ export default {
         target[dataIndex] = value;
         this.dataSource = dataSource;
       }
+      this.$emit('analysisChange',{id:this.id,result:this.dataSource})
     },
+
+    //删除函数
     onDelete(key) {
       const dataSource = [...this.dataSource];
       this.dataSource = dataSource.filter(item => item.key !== key);
-      this.$emit('analysisChange',{id:this.id,value:this.dataSource})
+      this.$emit('analysisChange',{id:this.id,result:this.dataSource})
     },
 
-    //添加新数据的函数
+    //添加新数据的函数,修改result中的数据
     handleAdd() {
       const { count, dataSource } = this;
-
+      const emptyDataSource=[];
       //添加的数据
       const newData = {
-
-
         key: count,
         //添加的数据一开始为空
-        name: ``,
-        
+        name: ``,       
       };
-      this.dataSource = [...dataSource, newData];
+      this.dataSource = [...dataSource, newData];  
       this.count = count + 1;
-      this.$emit('analysisChange',{id:this.id,value:this.dataSource})
+
+
+      //数据的格式转化
+      for(let i = 0,len=this.dataSource.length; i<len; i++){
+        let emptydict = this.dataSource[i];
+        console.log(emptydict)
+        for(let key in emptydict){
+          if(key=='name')
+           emptyDataSource.push(emptydict[key])
+        }
+      }
+      console.log(this.count)
+
+      this.$emit('analysisChange',{id:this.id,result:emptyDataSource})
     },
 
-  },
-};
+    
+  }
+}
+
 </script>
 <style scoped>
 .editable-cell {

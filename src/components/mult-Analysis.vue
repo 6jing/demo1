@@ -14,19 +14,20 @@
 
   <hr/>
 
-  <a-list :grid="{ gutter: 16, column: 4 }" :data-source="data">
+  <a-list :grid="{ gutter: 16, column: 4 }" :data-source="$store.state.data">
     <a-list-item slot="renderItem" slot-scope="item">
       <a-card :title="item.title">
         <!-- 将得到的数据传送给from模块，将from模块中的数据回调给result -->
           <From 
-          :id="item.id" 
-          :DataSource="item.result" 
-          @analysisChange="getnewanalysis"></From>
+          :id="item.id"
+          :DataSource="item.result"
+          @analysisChange="getnewanalysis">
+          </From>
       </a-card>
     </a-list-item>
   </a-list>
 
-  <a-button type="primary" >需求要素提交</a-button>
+  <a-button type="primary" @click="gotoAssociation">需求要素联想</a-button>
 </div>
 
 </template>
@@ -51,13 +52,14 @@ const data = [
     result:''
   },
   {
-    id:4,
+    id:3,
     title: '场景域 (scene) 需求要素',
     result:''
   },
 
 ];
 export default {
+
   data() {
     return {
       data,
@@ -82,26 +84,27 @@ export default {
       const {data: res} = await this.$http.post('/api/post', this.AnalysisContent)
       console.log(res)
 
+      console.log(data[1].result)
+
 
       //需要将this.result，改为this.res，将接收到的信息放入到表格中（改）
       for(var key in this.result){
-        this.data[i].result=this.result[key]
+        this.$store.state.data[i].result=this.result[key]
         i++
       }
-      //  console.log(data)
+
+
+      // console.log(data)
 
     },
 
-    //分析数据发生变化
-    getnewanalysis(e){
-      this.data.some(item =>{
-        if(item.id === e.id){
-          item.result=''
-          item.result=e.value
-        }
-      })
-    }
 
+    //转跳到Association页面
+    gotoAssociation(){
+      this.$router.push('/association')
+      this.$emit('shareAnalysisResult',this.data)
+      console.log(this.data)
+    }
   }
 }
 </script>
