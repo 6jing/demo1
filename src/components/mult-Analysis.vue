@@ -28,7 +28,7 @@
     </a-list-item>
   </a-list>
 
-  <a-button type="primary" @click="gotoAssociation">需求要素联想</a-button>
+  <a-button type="primary" @click="gotoAssociation">核心要素提交</a-button>
 </div>
 
 </template>
@@ -43,10 +43,10 @@ export default {
     return {
       AnalysisContent:'',
       result:{
-        S: ['机械手', '机'],
+        S: ['机械手'],
         FA: ['上下料'],
         FO: ['纸盒'],
-        scene: ['卧室']
+        scene: []
         }
     };
   },
@@ -86,8 +86,6 @@ export default {
     //转跳到Association页面
     gotoAssociation(){
       this.$router.push('/association')
-      this.$emit('shareAnalysisResult',this.data)
-      console.log(this.data)
     }
   }
 }

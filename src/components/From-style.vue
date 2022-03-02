@@ -79,16 +79,7 @@ export default {
   },
   data() {
     return {
-      dataSource: [
-        {
-          key: '0',
-          name: '添加需求实体',
-        },
-        {
-          key: '1',
-          name: 'Edward King 1',
-        },
-      ],
+      
 
       columns: [
         {

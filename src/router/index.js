@@ -4,7 +4,6 @@ import VueRouter from 'vue-router'
 import Analysis from '@/components/mult-Analysis.vue'
 import Association from '@/components/mult-Association.vue'
 import Completion from '@/components/mult-Completion.vue'
-import Keyword from '@/components/mult-Keyword.vue'
 import Intruduction from '@/components/mult-Intruduction.vue'
 
 
@@ -18,9 +17,12 @@ const router = new VueRouter({
         { path: '/', redirect: '/analysis' },
 
         { path: '/analysis', component: Analysis },
-        { path: '/association', component: Association },
+        {
+            path: '/association',
+            component: Association,
+
+        },
         { path: '/completion', component: Completion },
-        { path: '/keyword', component: Keyword },
         { path: '/intruduction', component: Intruduction },
     ]
 })

@@ -10,6 +10,9 @@ import Table from 'ant-design-vue/lib/table';
 import Popconfirm from 'ant-design-vue/lib/popconfirm';
 import List from 'ant-design-vue/lib/list';
 import Card from 'ant-design-vue/lib/card';
+import Tabs from 'ant-design-vue/lib/tabs';
+import Drawer from 'ant-design-vue/lib/drawer';
+import Alert from 'ant-design-vue/lib/alert';
 import 'ant-design-vue/dist/antd.css';
 
 
@@ -36,7 +39,10 @@ Vue.use(Popconfirm);
 Vue.use(menu);
 Vue.use(Input);
 Vue.use(List);
-Vue.component(Card.name, Card)
+Vue.component(Card.name, Card);
+Vue.use(Tabs);
+Vue.use(Drawer)
+Vue.use(Alert)
 
 
 //此处设置访问时的根路径

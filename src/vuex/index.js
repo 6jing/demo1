@@ -6,29 +6,34 @@ Vue.use(Vuex)
 
 
 export default new Vuex.Store({
+
     state: {
         data: [{
                 id: 0,
-                title: '功能域-行为(Function-Action)  需求要素',
+                title: '结构域 (Structrue) 需求要素',
+                abbreviation: "S",
                 result: [],
                 // 数据的条数
                 count: 0
             },
             {
                 id: 1,
-                title: '功能域-对象(Function-Object)  需求要素',
+                title: '功能域-行为(Function-Action)  需求要素',
+                abbreviation: "FA",
                 result: [],
                 count: 0
             },
             {
                 id: 2,
-                title: '结构域 (Structrue) 需求要素',
+                title: '功能域-对象(Function-Object)  需求要素',
+                abbreviation: "FO",
                 result: [],
                 count: 0,
             },
             {
                 id: 3,
                 title: '场景域 (scene) 需求要素',
+                abbreviation: "scene",
                 result: [],
                 //数据的条数
                 count: 0
@@ -63,21 +68,41 @@ export default new Vuex.Store({
 
     getters: {
         // 根据传送的id号来返还数据
-        fromDataSource: function(state, id) {
-            for (let i = 0, len = 4; i < len; i++) {
-                if (i == id) {
+        fromDataSource(state) {
+            var result_dict = {}
+            for (let ii = 0, len = state.data.length; ii < len; ii++) {
+                let key = ''
+                if (ii == 0) {
+                    key = 'S'
                     let empty = []
-                    for (let m = 0, len = state.data.result.length; m < len; m++) {
-                        let data = {}
-                        data.name = state.data.result[m]
-                        data.key = m
-                        empty.push(data)
+                    for (let yy = 0, len = state.data[ii].result.length; yy < len; yy++) {
+                        empty.push(state.data[ii].result[yy].name)
                     }
-                    return empty
-                } else {
-                    return
+                    result_dict[key] = empty
+                } else if (ii == 1) {
+                    key = 'FA'
+                    let empty = []
+                    for (let yy = 0, len = state.data[ii].result.length; yy < len; yy++) {
+                        empty.push(state.data[ii].result[yy].name)
+                    }
+                    result_dict[key] = empty
+                } else if (ii == 2) {
+                    key = 'FO'
+                    let empty = []
+                    for (let yy = 0, len = state.data[ii].result.length; yy < len; yy++) {
+                        empty.push(state.data[ii].result[yy].name)
+                    }
+                    result_dict[key] = empty
+                } else if (ii == 3) {
+                    key = 'scene'
+                    let empty = []
+                    for (let yy = 0, len = state.data[ii].result.length; yy < len; yy++) {
+                        empty.push(state.data[ii].result[yy].name)
+                    }
+                    result_dict[key] = empty
                 }
             }
+            return result_dict
         }
     }
 })
