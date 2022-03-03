@@ -13,8 +13,10 @@
   </a-list>
 
   <a-button type="primary" @click="association">核心要素分析</a-button>
+  
+    
   <hr>
-  <div>
+  <div ref="result" style="display:none">
     <a-tabs type="card" >
 
       <a-tab-pane key="1" tab="结构域 (Structrue) 需求要素">
@@ -23,7 +25,10 @@
             
             <MultFrom
             :data = "formatData(item.name)"
+            @choseresult="getresult"
             ></MultFrom>
+            <a-button type="primary" @click="anaylsisResultFromMult">重要关键词分析</a-button>
+
           </a-card>
         </div>
       </a-tab-pane>
@@ -35,7 +40,10 @@
             
             <MultFrom
             :data = "formatData(item.name)"
+            @choseresult="getresult"
             ></MultFrom>
+
+            <a-button type="primary" @click="anaylsisResultFromMult">重要关键词分析</a-button>
           </a-card>
         </div>
       </a-tab-pane>
@@ -46,7 +54,10 @@
             
             <MultFrom
             :data = "formatData(item.name)"
+            @choseresult="getresult"
             ></MultFrom>
+
+            <a-button type="primary" @click="anaylsisResultFromMult">重要关键词分析</a-button>
           </a-card>
         </div>
       </a-tab-pane>
@@ -57,19 +68,41 @@
             
             <MultFrom
             :data = "formatData(item.name)"
+            @choseresult="getresult"
             ></MultFrom>
+
+            <a-button type="primary" @click="anaylsisResultFromMult">重要关键词分析</a-button>
           </a-card>
         </div>
       </a-tab-pane>
   </a-tabs>
   </div>
+  
+
+  <!-- 抽屉 -->
+  <a-drawer
+      title="Basic Drawer"
+      placement="bottom"
+      :height=600
+      :closable="false"
+      :visible="visible"
+      :after-visible-change="afterVisibleChange"
+      @close="onClose"
+    >
+      <Fromdraw></Fromdraw>
+    </a-drawer>
   </div>
+
+
 </template>
 
 <script>
 import From from '@/components/From-style.vue';
 import MultFrom from '@/components/mult-From.vue'
+import Fromdraw from '@/components//From-drawer.vue'
 import {mapGetters,mapState} from 'vuex'
+
+
 
 
 
@@ -83,9 +116,11 @@ export default {
       //传送给Menu的数据
       semantic_sim_dict:'',
 
-      message:'来了',
-
       description:'',
+
+      resultFromMultform:'',
+
+      visible: false,
 
       //访问api后传回的数据
       semantic_sim_dict1 : {
@@ -169,6 +204,8 @@ export default {
   components:{
     From,
     MultFrom,
+    Fromdraw,
+    
   },
 
   methods:{
@@ -179,6 +216,8 @@ export default {
       console.log(res)
       this.semantic_sim_dict = this.semantic_sim_dict1
       console.log(this.semantic_sim_dict)
+      this.$refs.result.style.display = 'block'
+      
     },
 
     formatData(e) {
@@ -186,7 +225,42 @@ export default {
       resultitems = this.semantic_sim_dict[e]
       console.log(resultitems)
       return resultitems
-    }
+    },
+
+
+    getresult(newVal){
+      this.resultFromMultform =newVal
+    },
+
+    async anaylsisResultFromMult(){
+      console.log(this.resultFromMultform)
+      const {data: res} = await this.$http.post('/api/post', this.resultFromMultform)
+      console.log(res)
+      let a = Object.prototype.hasOwnProperty.call(this.resultFromMultform,'S')
+      let b = Object.prototype.hasOwnProperty.call(this.resultFromMultform,'FA')
+      let c = Object.prototype.hasOwnProperty.call(this.resultFromMultform,'FO')
+      let d = Object.prototype.hasOwnProperty.call(this.resultFromMultform,'scene') 
+      if(a&&b&&c&&d){
+        this.visible=true
+        this.$message.success('进入关键词的分析');
+      }else{
+        this.$message.warning('请选择并确认所需的重要关键词！');
+      }
+      this.resultFromMultform = ''
+    },
+
+    afterVisibleChange(val) {
+      console.log('visible', val);
+    },
+
+    
+    onClose() {
+      this.visible = false;
+    },
+
+    warning() {
+      this.$message.warning('This is a warning message');
+    },
 
   }
 }
@@ -203,8 +277,4 @@ hr{
   margin-bottom: 30px;
 }
 
-card{
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
 </style>

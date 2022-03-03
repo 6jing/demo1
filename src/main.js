@@ -13,7 +13,12 @@ import Card from 'ant-design-vue/lib/card';
 import Tabs from 'ant-design-vue/lib/tabs';
 import Drawer from 'ant-design-vue/lib/drawer';
 import Alert from 'ant-design-vue/lib/alert';
+import message from 'ant-design-vue/lib/message';
+
+
+
 import 'ant-design-vue/dist/antd.css';
+
 
 
 //导入路由模块
@@ -27,6 +32,7 @@ import axios from 'axios'
 
 import App from './App';
 
+
 // 调用antdesgin模块
 Vue.component(Button.name, Button);
 Vue.component(Layout.name, Layout);
@@ -35,6 +41,7 @@ Vue.component(Layout.Header.name, Layout.Header);
 Vue.component(Layout.Content.name, Layout.Content);
 Vue.component(Icon.name, Icon);
 Vue.component(Table.name, Table);
+Vue.use(message)
 Vue.use(Popconfirm);
 Vue.use(menu);
 Vue.use(Input);
@@ -45,13 +52,19 @@ Vue.use(Drawer)
 Vue.use(Alert)
 
 
+
 //此处设置访问时的根路径
 axios.defaults.baseURL = 'http://www.liulongbin.top:3006'
 
 //挂载axios
 Vue.prototype.$http = axios
 
+Vue.prototype.$message = message;
+
+
 Vue.config.productionTip = false;
+
+
 
 
 //实例化路由模块

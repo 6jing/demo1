@@ -14,7 +14,7 @@
     </a-table>
      <a-button type="primary" @click="importantanalysis(),showDrawer()" >确定重要关键词</a-button>
 
-     <a-drawer
+     <!-- <a-drawer
       title="Basic Drawer"
       :placement="placement"
       :closable="false"
@@ -22,8 +22,8 @@
       :height="500"
       @close="onClose"
     >
-    <!-- 弹窗出现的内容 -->
-            <a-list :grid="{ gutter: 16, column: 4 }" :data-source="$store.state.data">
+     弹窗出现的内容 
+             <a-list :grid="{ gutter: 16, column: 4 }" :data-source="$store.state.data">
                 <a-list-item slot="renderItem" slot-scope="item">
                     <a-card :title="item.title">
 
@@ -33,11 +33,11 @@
                     </a-card>
                 </a-list-item>
             </a-list>
-    </a-drawer>
+    </a-drawer> --> 
   </div>
 </template>
 <script>
-import From2 from '@/components/From-drawer.vue'
+// import From2 from '@/components/From-drawer.vue'
 
 
 const columns = [
@@ -127,7 +127,8 @@ export default {
 
   //外部传入的数据源
   props:[
-    'datasource'
+    'datasource',
+    'id'
   ],
 
   data() {
@@ -176,10 +177,12 @@ export default {
   },
 
   components:{
-    From2
+    // From2
   },
 
   methods:{
+
+
     //将格式化后的数据提交，并返回对应的数据，对页面进行渲染
     async importantanalysis() {
       const {data: res} = await this.$http.post('/api/post',this.visible)
@@ -187,9 +190,20 @@ export default {
     },
 
     showDrawer() {
-      let reult = ''
-      reult = this.SelectedRows
+      let reult = {}
+
+      for(let c =0,len=this.SelectedRows.length;c<len;c++){
+        reult[this.SelectedRows[c].name] = this.SelectedRows[c].Similarity
+      }
+
       this.$refs.sure.style.display = "block"
+
+      //将选择的数据传送给mult-from组件（父组件）
+      
+      
+      this.$emit('shareid',this.id)
+      this.$emit('sharedselection',reult)
+
       console.log(reult)
     },
 
