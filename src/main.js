@@ -14,6 +14,10 @@ import Tabs from 'ant-design-vue/lib/tabs';
 import Drawer from 'ant-design-vue/lib/drawer';
 import Alert from 'ant-design-vue/lib/alert';
 import message from 'ant-design-vue/lib/message';
+import Grid from 'ant-design-vue/lib/card/Grid';
+import { Col, Row } from 'ant-design-vue/lib/grid';
+import Select from 'ant-design-vue/lib/select';
+
 
 
 
@@ -50,11 +54,14 @@ Vue.component(Card.name, Card);
 Vue.use(Tabs);
 Vue.use(Drawer)
 Vue.use(Alert)
+Vue.use(Grid)
+Vue.use(Col)
+Vue.use(Row)
+Vue.use(Select)
 
 
 
 //此处设置访问时的根路径
-axios.defaults.baseURL = 'http://www.liulongbin.top:3006'
 
 //挂载axios
 Vue.prototype.$http = axios
@@ -64,7 +71,7 @@ Vue.prototype.$message = message;
 
 Vue.config.productionTip = false;
 
-
+axios.defaults.baseURL = "http://47.94.220.0:5001"
 
 
 //实例化路由模块

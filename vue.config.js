@@ -4,4 +4,5 @@ module.exports = defineConfig({
 
     // https://blog.csdn.net/xiaomajia029/article/details/88320233,版本问题引起的
     runtimeCompiler: true,
+
 })

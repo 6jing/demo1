@@ -32,14 +32,44 @@ export default new Vuex.Store({
             },
             {
                 id: 3,
-                title: '场景域 (scene) 需求要素',
+                title: '场景域 (scenario) 需求要素',
+                abbreviation: "scene",
+                result: [],
+                //数据的条数
+                count: 0
+            },
+        ],
+        data1: [{
+                id: 0,
+                title: '结构域 (Structrue) 需求要素',
+                abbreviation: "S",
+                result: [],
+                // 数据的条数
+                count: 0
+            },
+            {
+                id: 1,
+                title: '功能域-行为(Function-Action)  需求要素',
+                abbreviation: "FA",
+                result: [],
+                count: 0
+            },
+            {
+                id: 2,
+                title: '功能域-对象(Function-Object)  需求要素',
+                abbreviation: "FO",
+                result: [],
+                count: 0,
+            },
+            {
+                id: 3,
+                title: '场景域 (scenario) 需求要素',
                 abbreviation: "scene",
                 result: [],
                 //数据的条数
                 count: 0
             },
         ]
-
     },
 
     mutations: {
@@ -103,6 +133,6 @@ export default new Vuex.Store({
                 }
             }
             return result_dict
-        }
+        },
     }
 })

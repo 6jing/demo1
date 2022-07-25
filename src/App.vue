@@ -7,15 +7,12 @@
           <router-link to='/analysis' style="color:white"><span>个性化需求解析</span></router-link>
         </a-menu-item>
         <a-menu-item key="2">
-          <span><router-link to='/association' style="color:white">需求要素语义联想</router-link></span>
+          <span><router-link to='/association' style="color:white">需求要素语义分析</router-link></span>
         </a-menu-item>
         <a-menu-item key="3">
-          <span><router-link to='/completion' style="color:white">个性化需求补全</router-link></span>
+          <span><router-link to='/cluster' style="color:white">结构与解决方案检索</router-link></span>
         </a-menu-item>
         <a-menu-item key="4">
-          <span><router-link to='/keyword' style="color:white">需求关键词</router-link></span>
-        </a-menu-item>
-        <a-menu-item key="5">
           <span><router-link to='/intrudction' style="color:white">工具使用说明</router-link></span>
         </a-menu-item>
       </a-menu>
@@ -37,6 +34,8 @@
       
       <router-view></router-view>
 
+      
+
         
         
 
@@ -52,12 +51,13 @@ export default {
   data() {
     return {
       collapsed: false,
+      
     };
   },
 
   components:{
     
-  }
+  },
 };
 </script>
 

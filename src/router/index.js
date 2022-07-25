@@ -5,6 +5,7 @@ import Analysis from '@/components/mult-Analysis.vue'
 import Association from '@/components/mult-Association.vue'
 import Completion from '@/components/mult-Completion.vue'
 import Intruduction from '@/components/mult-Intruduction.vue'
+import Cluster from '@/views/cluster/cluster.vue'
 
 
 //2.调用Vue.use()函数，把VueRouter安装为Vue插件
@@ -23,6 +24,7 @@ const router = new VueRouter({
 
         },
         { path: '/completion', component: Completion },
+        { path: '/cluster', component: Cluster },
         { path: '/intruduction', component: Intruduction },
     ]
 })

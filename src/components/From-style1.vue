@@ -196,7 +196,7 @@ export default {
         reult[this.SelectedRows[c].name] = this.SelectedRows[c].Similarity
       }
 
-      this.$refs.sure.style.display = "block"
+      this.$message.success('需求关键词确认成功');
 
       //将选择的数据传送给mult-from组件（父组件）
       
@@ -205,10 +205,6 @@ export default {
       this.$emit('sharedselection',reult)
 
       console.log(reult)
-    },
-
-    onClose() {
-      this.visible = false;
     },
 
   }
